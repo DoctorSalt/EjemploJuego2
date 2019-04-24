@@ -17,7 +17,7 @@ MouseListener
 	// Las coordenadas del lugar donde pulse
 	int pulX, pulY;
 	// Las vidas
-	int vidas;
+	int vidas, puntos;
 	Random rnd = new Random();
 	public EjemploJuego2()
 	{
@@ -38,7 +38,14 @@ MouseListener
 	}
 	public void paint(Graphics g)
 	{
+		String texto1="Puntos = "+puntos;
+		String texto2="Vidas = "+vidas;
 		g.drawRect(posX, posY, 20, 20);
+		g.drawString(texto1,80,60);
+		g.drawString(texto2,80,70);
+		if(vidas==0) {
+			g.drawString("Sin vidas FIN.exe",30,120);
+		}
 	}
 	public void windowActivated(WindowEvent we) {}
 	public void windowClosed(WindowEvent we) {}
@@ -63,6 +70,7 @@ MouseListener
 		if((posX<pulX)&&(pulX<posX+20)&&(posY<pulY)&&(pulY<posY+20))
 		{
 			System.out.println("Acertaste");
+			puntos++;
 			// Obtenemos una nueva posición del cuadrado
 			obtenerPosicion();
 			// Y lo dibujamos
@@ -73,14 +81,15 @@ MouseListener
 			vidas--;
 			if(vidas==0)
 			{
-				System.out.println("Has acabado todas las vidas. "
-						+ "¡FIN!");
-						// Deshabilitamos el MouseListener pues se haacabado el juego
+					// Deshabilitamos el MouseListener pues se haacabado el juego
+					//Y dibujamos el 0 vidas
 						this.removeMouseListener(this);
+						repaint();
 			}
 			else
 			{
-				System.out.println("Has perdido una vida. Te queda "+vidas+" vidas.");
+				//Dibujamos que le quitamos la vida
+				repaint();
 			}
 		}
 	}
